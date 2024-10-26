@@ -149,7 +149,6 @@ Resources:
     Properties:
       PolicyName: !Sub "${AWS::StackName}-ecs-auto-scaling"
       PolicyType: TargetTrackingScaling
-      ResourceId: !Ref MattermostService
       ScalableDimension: ecs:service:DesiredCount
       ScalingTargetId: !Ref AutoScalingTarget
       TargetTrackingScalingPolicyConfiguration:
