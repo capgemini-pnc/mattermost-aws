@@ -1,0 +1,39 @@
+name: Deploy CloudFormation Stacks
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+permissions:
+  id-token: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install rain CLI
+        run: |
+          curl -Lo rain.zip https://github.com/aws-cloudformation/rain/releases/download/v1.17.0/rain-v1.17.0_linux-amd64.zip
+          unzip -j -o rain.zip
+          chmod +x rain
+          sudo mv rain /usr/local/bin/
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: arn:aws:iam::288470581218:role/github-actions
+          aws-region: eu-west-1
+
+      - name: Deploy CloudFormation stack
+        run: |
+          if [ "${{ github.ref }}" == "refs/heads/master" ]; then
+            rain deploy -y main.yaml mattermost-prod
+          else
+            rain deploy -y main.yaml mattermost-${{ github.head_ref }}
+          fi
