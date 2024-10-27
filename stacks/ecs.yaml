@@ -39,6 +39,9 @@ Resources:
     Properties:
       CapacityProviders:
         - FARGATE
+      ClusterSettings:
+        - Name: containerInsights
+          Value: enabled
 
   MattermostTaskExecutionRole:
     Type: AWS::IAM::Role
