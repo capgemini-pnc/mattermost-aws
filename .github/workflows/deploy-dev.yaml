@@ -1,0 +1,23 @@
+name: Deploy CloudFormation Stacks
+
+on:
+  pull_request:
+
+permissions:
+  id-token: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: development
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - uses: ./.github/actions/install-rain-cli
+
+      - uses: ./.github/actions/configure-aws-credentials
+
+      - name: Deploy CloudFormation stack
+        run: |
+          rain deploy -y main.yaml mattermost-${{ github.head_ref }}

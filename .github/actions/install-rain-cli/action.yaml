@@ -1,0 +1,12 @@
+name: "Install rain CLI"
+
+runs:
+  using: composite
+  steps:
+    - name: Install rain CLI
+      shell: bash
+      run: |
+        curl -Lo rain.zip https://github.com/aws-cloudformation/rain/releases/download/v1.17.0/rain-v1.17.0_linux-amd64.zip
+        unzip -j -o rain.zip
+        chmod +x rain
+        sudo mv rain /usr/local/bin/

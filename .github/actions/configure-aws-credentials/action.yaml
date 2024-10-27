@@ -1,0 +1,10 @@
+name: "Configure AWS Credentials"
+
+runs:
+  using: composite
+  steps:
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        role-to-assume: arn:aws:iam::288470581218:role/github-actions
+        aws-region: eu-west-1
