@@ -19,5 +19,4 @@ jobs:
       - uses: ./.github/actions/configure-aws-credentials
 
       - name: Deploy CloudFormation stack
-        run: |
-          rain deploy -y main.yaml mattermost-${{ github.head_ref }}
+        run: rain deploy -y main.yaml mattermost-${{ github.head_ref }}

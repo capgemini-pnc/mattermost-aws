@@ -1,0 +1,19 @@
+name: Check Templates Format
+
+on:
+  pull_request:
+
+jobs:
+  check-format:
+    runs-on: ubuntu-latest
+    environment: development
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - uses: ./.github/actions/install-rain-cli
+
+      - name: Check templates format
+        run: |
+          rain fmt --verify main.yaml
+          rain fmt --verify stacks/*.yaml
