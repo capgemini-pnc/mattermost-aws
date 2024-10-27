@@ -1,4 +1,4 @@
-name: Deploy CloudFormation Stacks
+name: Deploy in production environment
 
 on:
   push:
