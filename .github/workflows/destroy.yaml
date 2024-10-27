@@ -1,0 +1,24 @@
+name: Destroy CloudFormation Stack
+
+on:
+  pull_request:
+    types: [closed]
+
+permissions:
+  id-token: write
+
+jobs:
+  destroy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - uses: ./.github/actions/install-rain-cli
+
+      - uses: ./.github/actions/configure-aws-credentials
+
+      - name: Destroy CloudFormation stack
+        run: |
+          rain rm -y mattermost-${{ github.head_ref }}
