@@ -1,9 +1,10 @@
 AWSTemplateFormatVersion: "2010-09-09"
+
 Resources:
   LogGroup:
     Type: AWS::Logs::LogGroup
     Properties:
-      LogGroupName: !Sub "mattermost/${AWS::StackName}"
+      LogGroupName: !Sub mattermost/${AWS::StackName}
       RetentionInDays: 7
 
   AlarmTopic:

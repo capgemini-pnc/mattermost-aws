@@ -1,4 +1,5 @@
 AWSTemplateFormatVersion: "2010-09-09"
+
 Parameters:
   VpcId:
     Type: String
@@ -48,7 +49,7 @@ Resources:
           - Effect: Allow
             Principal:
               Service: ecs-tasks.amazonaws.com
-            Action: "sts:AssumeRole"
+            Action: sts:AssumeRole
       Policies:
         - PolicyName: logs
           PolicyDocument:
@@ -56,10 +57,10 @@ Resources:
             Statement:
               - Effect: Allow
                 Action:
-                  - "logs:CreateLogGroup"
-                  - "logs:CreateLogStream"
-                  - "logs:PutLogEvents"
-                Resource: "*"
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Resource: '*'
 
   MattermostTaskDefinition:
     Type: AWS::ECS::TaskDefinition
@@ -80,12 +81,11 @@ Resources:
             - Name: MM_SQLSETTINGS_DRIVERNAME
               Value: postgres
             - Name: MM_SQLSETTINGS_DATASOURCE
-              Value:
-                Fn::Sub:
-                  - postgres://${User}:${Password}@${DatabaseEndpointAddress}:5432/${DBName}?connect_timeout=10
-                  - User: mattermost
-                    Password: mattermost
-                    DBName: mattermost
+              Value: !Sub
+                - postgres://${User}:${Password}@${DatabaseEndpointAddress}:5432/${DBName}?connect_timeout=10
+                - User: mattermost
+                  Password: mattermost
+                  DBName: mattermost
           LogConfiguration:
             LogDriver: awslogs
             Options:
@@ -129,8 +129,10 @@ Resources:
         Statement:
           - Effect: Allow
             Principal:
-              Service: [application-autoscaling.amazonaws.com]
-            Action: ["sts:AssumeRole"]
+              Service:
+                - application-autoscaling.amazonaws.com
+            Action:
+              - sts:AssumeRole
       ManagedPolicyArns:
         - arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceAutoscaleRole
 
@@ -147,7 +149,7 @@ Resources:
   AutoScalingPolicy:
     Type: AWS::ApplicationAutoScaling::ScalingPolicy
     Properties:
-      PolicyName: !Sub "${AWS::StackName}-ecs-auto-scaling"
+      PolicyName: !Sub ${AWS::StackName}-ecs-auto-scaling
       PolicyType: TargetTrackingScaling
       ScalableDimension: ecs:service:DesiredCount
       ScalingTargetId: !Ref AutoScalingTarget
