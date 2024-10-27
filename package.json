@@ -1,0 +1,15 @@
+{
+  "name": "mattermost-aws",
+  "devDependencies": {
+    "husky": "^9.1.6",
+    "lint-staged": "^15.2.10"
+  },
+  "scripts": {
+    "format:check": "rain fmt -v main.yaml stacks/*.yaml",
+    "format:fix": "rain fmt -w main.yaml stacks/*.yaml",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "stacks/*.yaml": "npm run format:fix"
+  }
+}
