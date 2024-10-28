@@ -36,7 +36,7 @@ Resources:
       DBInstanceClass: db.t3.medium
       Engine: postgres
       EngineVersion: 14.9
-      AllocatedStorage: 20
+      AllocatedStorage: 30
       DBName: mattermost
       MasterUsername: mattermost
       MasterUserPassword: mattermost
