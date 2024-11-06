@@ -170,7 +170,7 @@ Resources:
       Namespace: AWS/ECS
       ComparisonOperator: GreaterThanOrEqualToThreshold
       EvaluationPeriods: 1
-      Period: 60
+      Period: 50
       Threshold: 50
       TreatMissingData: ignore
       Statistic: Average
