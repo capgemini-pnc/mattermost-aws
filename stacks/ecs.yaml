@@ -69,7 +69,7 @@ Resources:
     Type: AWS::ECS::TaskDefinition
     Properties:
       Cpu: 512
-      Memory: 1024
+      Memory: 2048
       NetworkMode: awsvpc
       ExecutionRoleArn: !Ref MattermostTaskExecutionRole
       RequiresCompatibilities:
